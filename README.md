@@ -1,0 +1,1 @@
+Jcrfsuite is a Java interface of crfsuite (http://www.chokkan.org/software/crfsuite/) using SWIG and class injection technique (same as the one used in snappy-java version 1.1.0).
