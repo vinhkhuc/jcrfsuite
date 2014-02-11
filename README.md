@@ -4,38 +4,43 @@ Jcrfsuite is a Java interface of [crfsuite](http://www.chokkan.org/software/crfs
 
 ### 1) Build
 
+To build, you need to install Maven, then run
+
+<pre>
 mvn package
+</pre>
 
-### 2) Train POS model
+### 2) Training
+To train a POS model from Twitter POS data, run
 
+<pre>
 java -cp target/jcrfsuite-0.0.1.jar com.github.jcrfsuite.example.Train example/tweet-pos/train.txt twitter-pos.model
+</pre>
 
-### 3) POS tagging
+### 3) Tagging
+To test the trained POS model against the test set, run
 
+<pre>
 java -cp target/jcrfsuite-0.0.1.jar com.github.jcrfsuite.example.Tag twitter-pos.model example/tweet-pos/test.txt 
+</pre>
 
-The output should be:
+The output should be as follows:
 
-> Gold &nbsp;&nbsp;&nbsp;&nbsp; Predict &nbsp;&nbsp;&nbsp;&nbsp; Probability
+<pre>
+Gold	Predict	Probability
+........................
+O	O	1.00
+V	V	1.00
+D	D	1.00
+^	N	0.96
+&	&	1.00
+L	L	0.79
+P	P	0.80
+^	^	0.94
+,	,	0.98
 
-> ........................
+Accuracy = 91.77%
+</pre>
 
-> O &nbsp;&nbsp;&nbsp;&nbsp; O &nbsp;&nbsp;&nbsp;&nbsp; 1.00
+Note that the accuracy might be slightly different than in the above output.
 
-> V &nbsp;&nbsp;&nbsp;&nbsp; V &nbsp;&nbsp;&nbsp;&nbsp; 1.00
-
-> D &nbsp;&nbsp;&nbsp;&nbsp; D &nbsp;&nbsp;&nbsp;&nbsp; 1.00
-
-> ^ &nbsp;&nbsp;&nbsp;&nbsp; N &nbsp;&nbsp;&nbsp;&nbsp; 0.96
-
-> & &nbsp;&nbsp;&nbsp;&nbsp; & &nbsp;&nbsp;&nbsp;&nbsp; 1.00
-
-> L &nbsp;&nbsp;&nbsp;&nbsp; L &nbsp;&nbsp;&nbsp;&nbsp; 0.79
-
-> P &nbsp;&nbsp;&nbsp;&nbsp; P &nbsp;&nbsp;&nbsp;&nbsp; 0.80
-
-> ^ &nbsp;&nbsp;&nbsp;&nbsp; ^ &nbsp;&nbsp;&nbsp;&nbsp; 0.94
-
-> , &nbsp;&nbsp;&nbsp;&nbsp; , &nbsp;&nbsp;&nbsp;&nbsp; 0.98
-
-> Accuracy = 91.77%
