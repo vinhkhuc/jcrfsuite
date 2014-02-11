@@ -2,6 +2,7 @@ package com.github.jcrfsuite;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +31,7 @@ public class CrfTagger {
 		tagger.open(modelFile);
 	}
 	
-	protected static List<ItemSequence> loadTaggingInstances(String fileName) 
-			throws Exception 
+	protected static List<ItemSequence> loadTaggingInstances(String fileName) throws IOException 
 	{
 		List<ItemSequence> xseqs = new ArrayList<ItemSequence>();
 		ItemSequence xseq = new ItemSequence();
@@ -56,7 +56,7 @@ public class CrfTagger {
 	}
 	
 	/**
-	 * Tags a item sequence
+	 * Tag an item sequence
 	 */
 	public static List<Pair<String, Double>> tag(ItemSequence xseq) {
 		
@@ -75,9 +75,9 @@ public class CrfTagger {
 	}
 	
 	/**
-	 * Tag text stored in file
+	 * Tag text in file
 	 */
-	public static List<List<Pair<String, Double>>> tag(String fileName) throws Exception {
+	public static List<List<Pair<String, Double>>> tag(String fileName) throws IOException {
 		
 		List<List<Pair<String, Double>>> taggedSentences = 
 				new ArrayList<List<Pair<String, Double>>>();
