@@ -1,4 +1,4 @@
-Jcrfsuite is a Java interface of [crfsuite](http://www.chokkan.org/software/crfsuite/) using SWIG and class injection technique (same as the one used in snappy-java version 1.1.0).
+Jcrfsuite is a Java interface of [crfsuite](http://www.chokkan.org/software/crfsuite/), a fast implementation of Conditional Random Fields, using SWIG and class injection technique (same technique used in [snappy-java](https://github.com/xerial/snappy-java) version 1.1.0).
 
 ### Example on how to use jcrfsuite for Twitter POS tagging
 
@@ -16,24 +16,26 @@ java -cp target/jcrfsuite-0.0.1.jar com.github.jcrfsuite.example.Tag twitter-pos
 
 The output should be:
 
-> Gold	Predict	Probability
+> Gold &nbsp;&nbsp;&nbsp;&nbsp; Predict &nbsp;&nbsp;&nbsp;&nbsp; Probability
 
-> O       O       1.00
+> ........................
 
-> V       V       1.00
+> O &nbsp;&nbsp;&nbsp;&nbsp; O &nbsp;&nbsp;&nbsp;&nbsp; 1.00
 
-> D       D       1.00
+> V &nbsp;&nbsp;&nbsp;&nbsp; V &nbsp;&nbsp;&nbsp;&nbsp; 1.00
 
-> ^       N       0.96
+> D &nbsp;&nbsp;&nbsp;&nbsp; D &nbsp;&nbsp;&nbsp;&nbsp; 1.00
 
-> &       &       1.00
+> ^ &nbsp;&nbsp;&nbsp;&nbsp; N &nbsp;&nbsp;&nbsp;&nbsp; 0.96
 
-> L       L       0.79
+> & &nbsp;&nbsp;&nbsp;&nbsp; & &nbsp;&nbsp;&nbsp;&nbsp; 1.00
 
-> P       P       0.80
+> L &nbsp;&nbsp;&nbsp;&nbsp; L &nbsp;&nbsp;&nbsp;&nbsp; 0.79
 
-> ^       ^       0.94
+> P &nbsp;&nbsp;&nbsp;&nbsp; P &nbsp;&nbsp;&nbsp;&nbsp; 0.80
 
-> ,       ,       0.98
+> ^ &nbsp;&nbsp;&nbsp;&nbsp; ^ &nbsp;&nbsp;&nbsp;&nbsp; 0.94
+
+> , &nbsp;&nbsp;&nbsp;&nbsp; , &nbsp;&nbsp;&nbsp;&nbsp; 0.98
 
 > Accuracy = 91.77%
