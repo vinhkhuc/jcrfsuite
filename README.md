@@ -14,14 +14,14 @@ mvn package
 To train a POS model from Twitter POS data, run
 
 <pre>
-java -cp target/jcrfsuite-0.0.1.jar com.github.jcrfsuite.example.Train example/tweet-pos/train.txt twitter-pos.model
+java -cp target/jcrfsuite-0.1.jar com.github.jcrfsuite.example.Train example/tweet-pos/train.txt twitter-pos.model
 </pre>
 
 ### 3) Tagging
 To test the trained POS model against the test set, run
 
 <pre>
-java -cp target/jcrfsuite-0.0.1.jar com.github.jcrfsuite.example.Tag twitter-pos.model example/tweet-pos/test.txt 
+java -cp target/jcrfsuite-0.1.jar com.github.jcrfsuite.example.Tag twitter-pos.model example/tweet-pos/test.txt 
 </pre>
 
 The output should be as follows:
@@ -29,15 +29,15 @@ The output should be as follows:
 <pre>
 Gold	Predict	Probability
 ........................
-O	O	1.00
-V	V	1.00
-D	D	1.00
-^	N	0.96
-&	&	1.00
-L	L	0.79
-P	P	0.80
-^	^	0.94
-,	,	0.98
+O		O		1.00
+V		V		1.00
+D		D		1.00
+^		N		0.96
+&		&		1.00
+L		L		0.79
+P		P		0.80
+^		^		0.94
+,		,		0.98
 
 Accuracy = 91.77%
 </pre>

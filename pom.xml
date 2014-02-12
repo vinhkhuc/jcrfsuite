@@ -4,7 +4,7 @@
 
   <groupId>com.github.jcrfsuite</groupId>
   <artifactId>jcrfsuite</artifactId>
-  <version>0.0.1</version>
+  <version>0.1</version>
   <packaging>jar</packaging>
 
   <name>jcrfsuite</name>
