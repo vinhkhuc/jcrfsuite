@@ -9,21 +9,21 @@ To build, you need to install Maven, then run
 <pre>
 mvn package
 </pre>
-
+	
 ### 2) Training
 To train a POS model from Twitter POS data, run
 
 <pre>
 java -cp target/jcrfsuite-0.1.jar com.github.jcrfsuite.example.Train example/tweet-pos/train.txt twitter-pos.model
 </pre>
-
+	
 ### 3) Tagging
 To test the trained POS model against the test set, run
 
 <pre>
 java -cp target/jcrfsuite-0.1.jar com.github.jcrfsuite.example.Tag twitter-pos.model example/tweet-pos/test.txt 
 </pre>
-
+	
 The output should be as follows:
 
 <pre>
