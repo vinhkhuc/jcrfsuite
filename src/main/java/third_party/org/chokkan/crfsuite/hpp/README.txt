@@ -1,4 +1,4 @@
-This folder contains notes aoubt the hacks made into the original crfsuite.hpp.
+This folder contains notes about the hacks made into the original crfsuite.hpp.
 
 CHANGE LOG
 

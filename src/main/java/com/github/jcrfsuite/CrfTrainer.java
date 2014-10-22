@@ -63,7 +63,7 @@ public class CrfTrainer {
 	}
 	
 	/**
-	 * Trains the CRF Suite using data from a given file
+	 * Trains the CRF Suite using data from a given file.
 	 */
 	public static void train(String fileName, String modelFile) throws IOException {
 		
@@ -76,10 +76,35 @@ public class CrfTrainer {
 	}
 
 	/**
-	 * Train CRF Suite with annotated item sequences
+     * Trains the CRF Suite using data from a given file.
+     */
+    public static void train(String fileName, String modelFile,
+            String algorithm, String graphicalModelType,
+            Pair<String, String>... parameters) throws IOException {
+        
+        Pair<List<ItemSequence>, List<StringList>> trainingData
+            = loadTrainingInstances(fileName);
+        
+        List<ItemSequence> xseqs = trainingData.first;
+        List<StringList> yseqs = trainingData.second;
+        train(xseqs, yseqs, modelFile, algorithm, graphicalModelType, parameters);
+    }
+
+	/**
+	 * Train CRF Suite with annotated item sequences.
 	 */
 	public static void train(List<ItemSequence> xseqs, List<StringList> yseqs, 
 			String modelFile) 
+	{
+		train(xseqs, yseqs, modelFile, "lbfgs", "crf1d");
+	}
+
+	/**
+	 * Train CRF Suite with annotated item sequences.
+	 */
+	public static void train(List<ItemSequence> xseqs, List<StringList> yseqs, 
+			String modelFile, String algorithm, String graphicalModelType,
+			Pair<String, String>... parameters) 
 	{
 		// Add training data into the trainer
 		int n = xseqs.size();
@@ -90,7 +115,7 @@ public class CrfTrainer {
 		
 		// Use L-BFGS with L1/L2 regularization and 1st-order dyad features
 		// although crf1d is the only one training option :)
-		trainer.select("lbfgs", "crf1d");
+		trainer.select(algorithm, graphicalModelType);
 //		trainer.select("l2sgd", "crf1d");
 //		trainer.select("averaged-perceptron", "crf1d");
 //		trainer.select("passive-aggressive", "crf1d");
@@ -103,7 +128,14 @@ public class CrfTrainer {
 //		trainer.set("epsilon", "0.0000001");
 //		trainer.set("delta", "0.0000001");
 //		trainer.set("num_memories", "6");
-		
+
+		// set parameters
+		if (parameters != null) {
+			for (Pair<String, String> attribute : parameters) {
+				trainer.set(attribute.first, attribute.second);
+			}
+		}
+
 		// List parameters and their values
 		StringList params = trainer.params();
 		for (int i = 0; i < params.size(); i++) {

@@ -4,10 +4,16 @@
 
 	<groupId>com.github.jcrfsuite</groupId>
 	<artifactId>jcrfsuite</artifactId>
-	<version>0.1</version>
+	<version>0.1-SNAPSHOT</version>
 	<name>Crfsuite for Java</name>
 	<packaging>jar</packaging>
 	<url>http://maven.apache.org</url>
+
+	<scm>
+		<connection>scm:git:https://github.com/vinhkhuc/jcrfsuite.git</connection>
+		<developerConnection>scm:git:git@github.com:vinhkhuc/jcrfsuite.git</developerConnection>
+		<url>https://github.com/vinhkhuc/jcrfsuite</url>
+	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -28,6 +34,19 @@
 				</includes>
 			</resource>
 		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<compilerArgument>-Xlint:all</compilerArgument>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 	<dependencies>
 		<dependency>
