@@ -4,7 +4,7 @@
 
 	<groupId>com.github.jcrfsuite</groupId>
 	<artifactId>jcrfsuite</artifactId>
-	<version>0.1-SNAPSHOT</version>
+	<version>0.2</version>
 	<name>Crfsuite for Java</name>
 	<packaging>jar</packaging>
 	<url>http://maven.apache.org</url>
