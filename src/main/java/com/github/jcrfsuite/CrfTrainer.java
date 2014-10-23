@@ -6,14 +6,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.jcrfsuite.util.CrfSuiteLoader;
-import com.github.jcrfsuite.util.Pair;
-
 import third_party.org.chokkan.crfsuite.Attribute;
 import third_party.org.chokkan.crfsuite.Item;
 import third_party.org.chokkan.crfsuite.ItemSequence;
 import third_party.org.chokkan.crfsuite.StringList;
 import third_party.org.chokkan.crfsuite.Trainer;
+
+import com.github.jcrfsuite.util.CrfSuiteLoader;
+import com.github.jcrfsuite.util.Pair;
 
 public class CrfTrainer {
 	
@@ -24,9 +24,7 @@ public class CrfTrainer {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	private static final Trainer trainer = new Trainer();
-	
+
 	protected static Pair<List<ItemSequence>, List<StringList>> loadTrainingInstances(
 			String fileName) throws IOException 
 	{
@@ -106,6 +104,7 @@ public class CrfTrainer {
 			String modelFile, String algorithm, String graphicalModelType,
 			Pair<String, String>... parameters) 
 	{
+		Trainer trainer = new Trainer();
 		// Add training data into the trainer
 		int n = xseqs.size();
 		for (int i = 0; i < n; i++) {
