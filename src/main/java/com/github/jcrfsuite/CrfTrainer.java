@@ -21,11 +21,11 @@ public class CrfTrainer {
 		try {
 			CrfSuiteLoader.load();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 	
-	private static Trainer trainer = new Trainer();
+	private static final Trainer trainer = new Trainer();
 	
 	protected static Pair<List<ItemSequence>, List<StringList>> loadTrainingInstances(
 			String fileName) throws IOException 
@@ -76,19 +76,19 @@ public class CrfTrainer {
 	}
 
 	/**
-     * Trains the CRF Suite using data from a given file.
-     */
-    public static void train(String fileName, String modelFile,
-            String algorithm, String graphicalModelType,
-            Pair<String, String>... parameters) throws IOException {
-        
-        Pair<List<ItemSequence>, List<StringList>> trainingData
-            = loadTrainingInstances(fileName);
-        
-        List<ItemSequence> xseqs = trainingData.first;
-        List<StringList> yseqs = trainingData.second;
-        train(xseqs, yseqs, modelFile, algorithm, graphicalModelType, parameters);
-    }
+	 * Trains the CRF Suite using data from a given file.
+	 */
+	public static void train(String fileName, String modelFile,
+			String algorithm, String graphicalModelType,
+			Pair<String, String>... parameters) throws IOException {
+		
+		Pair<List<ItemSequence>, List<StringList>> trainingData
+			= loadTrainingInstances(fileName);
+		
+		List<ItemSequence> xseqs = trainingData.first;
+		List<StringList> yseqs = trainingData.second;
+		train(xseqs, yseqs, modelFile, algorithm, graphicalModelType, parameters);
+	}
 
 	/**
 	 * Train CRF Suite with annotated item sequences.

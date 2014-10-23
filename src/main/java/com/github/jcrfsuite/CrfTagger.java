@@ -21,7 +21,7 @@ public class CrfTagger {
 		try {
 			CrfSuiteLoader.load();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 	
