@@ -25,8 +25,8 @@ public class Tag {
 		String testFile = args[1];
 		
 		// POS tag
-		CrfTagger.loadModel(modelFile);
-		List<List<Pair<String, Double>>> tagProbLists = CrfTagger.tag(testFile);
+		CrfTagger crfTagger = new CrfTagger(modelFile);
+		List<List<Pair<String, Double>>> tagProbLists = crfTagger.tag(testFile);
 		
 		// Compute accuracy
 		int total = 0;
