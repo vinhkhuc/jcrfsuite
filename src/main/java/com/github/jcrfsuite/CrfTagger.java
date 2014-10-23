@@ -36,7 +36,7 @@ public class CrfTagger {
 	 * @param modelFile The file containing the model for this tagger.
 	 */
 	public CrfTagger(String modelFile){
-	    tagger.open(modelFile);
+		tagger.open(modelFile);
 	}
 	
 	protected static List<ItemSequence> loadTaggingInstances(String fileName) throws IOException 
@@ -95,5 +95,18 @@ public class CrfTagger {
 		}
 		
 		return taggedSentences;
+	}
+
+	/**
+	 * @return The possible labels for this tagger.
+	 */
+	public List<String> getlabels() {
+		StringList labels = tagger.labels();
+		int numLabels = (int) labels.size();
+		List<String> result = new ArrayList<>(numLabels);
+		for (int labelIndex = 0; labelIndex < numLabels; ++labelIndex) {
+			result.add(labels.get(labelIndex));
+		}
+		return result;
 	}
 }
