@@ -94,6 +94,8 @@ public class CrfTagger {
 	 *			The name of the file containing sequences to label.
 	 * @return For each sequence in the file, for each item in the sequence, a {@link Pair} for each label with the
 	 *		 score for the label
+	 * @throws IOException
+	 *			 If there is a problem using the file.
 	 */
 	public List<List<Pair<String, Double>>> tag(String fileName) throws IOException {
 		
