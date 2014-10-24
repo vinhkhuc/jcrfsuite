@@ -16,7 +16,7 @@ import third_party.org.chokkan.crfsuite.StringList;
 import third_party.org.chokkan.crfsuite.Tagger;
 
 /**
- * An instance of a tagger using CRFsuite.
+ * An instance of a tagger using CRFsuite.  CURRENTLY NOT THREAD SAFE because the C code isn't thread safe.
  */
 public class CrfTagger {
 	
