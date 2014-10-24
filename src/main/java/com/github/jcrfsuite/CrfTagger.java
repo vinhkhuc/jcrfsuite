@@ -16,7 +16,7 @@ import third_party.org.chokkan.crfsuite.StringList;
 import third_party.org.chokkan.crfsuite.Tagger;
 
 /**
- * An instance of a tagger using CRFsuite.  CURRENTLY NOT THREAD SAFE because the C code isn't thread safe.
+ * An instance of a tagger using CRFsuite.
  */
 public class CrfTagger {
 	
@@ -63,11 +63,15 @@ public class CrfTagger {
 		return xseqs;
 	}
 	
-	/**
-	 * Tag an item sequence.
+   /**
+	 * Tag an item sequence. This method is synchronized so that you do not try to label multiple sequences at the same
+	 * time.
+	 * 
+	 * @param xseq
+	 *			The input sequence.
+	 * @return For each item in the sequence, a {@link Pair} for each label with the score for the label.
 	 */
-	public List<Pair<String, Double>> tag(ItemSequence xseq) {
-		
+	public synchronized List<Pair<String, Double>> tag(ItemSequence xseq) {
 		List<Pair<String, Double>> predicted = 
 				new ArrayList<Pair<String, Double>>();
 		
@@ -83,7 +87,13 @@ public class CrfTagger {
 	}
 	
 	/**
-	 * Tag text in file.
+	 * Tag text in file. This calls a synchronized method so that you do not try to label multiple sequences at the same
+	 * time.
+	 * 
+	 * @param fileName
+	 *			The name of the file containing sequences to label.
+	 * @return For each sequence in the file, for each item in the sequence, a {@link Pair} for each label with the
+	 *		 score for the label
 	 */
 	public List<List<Pair<String, Double>>> tag(String fileName) throws IOException {
 		
