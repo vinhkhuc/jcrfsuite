@@ -202,7 +202,7 @@ public class CrfSuiteLoader {
 	        }
 	        catch (Exception e) {
 	            e.printStackTrace();
-	            throw new Exception(e.getMessage());
+	            throw e;
 	        }
         }
     }
@@ -266,8 +266,8 @@ public class CrfSuiteLoader {
             return rootClassLoader.loadClass(nativeLoaderClassName);
 
         } catch (Exception e) {
-            e.printStackTrace(System.err);
-            throw new Exception(e.getMessage());
+            e.printStackTrace();
+            throw e;
         }
 
     }
@@ -380,7 +380,7 @@ public class CrfSuiteLoader {
             return new File(targetFolder, extractedLibFileName);
         }
         catch (IOException e) {
-            e.printStackTrace(System.err);
+            e.printStackTrace();
             return null;
         }
 
@@ -451,7 +451,7 @@ public class CrfSuiteLoader {
 				version = version.trim().replaceAll("[^0-9M\\.]", "");
 			}
 		} catch (IOException e) {
-			System.err.println(e);
+			e.printStackTrace();
 		}	
 		return version;
 	}
