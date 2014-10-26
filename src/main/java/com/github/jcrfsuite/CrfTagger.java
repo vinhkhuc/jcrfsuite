@@ -63,7 +63,7 @@ public class CrfTagger {
 		return xseqs;
 	}
 	
-   /**
+	/**
 	 * Tag an item sequence. This method is synchronized so that you do not try to label multiple sequences at the same
 	 * time.
 	 * 
