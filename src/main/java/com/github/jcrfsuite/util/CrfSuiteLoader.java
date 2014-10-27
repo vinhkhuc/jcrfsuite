@@ -181,7 +181,6 @@ public class CrfSuiteLoader {
      * parent class loader. So once CrfSuiteNativeLoader is loaded by the root
      * class loader, no child class loader initialize CrfSuiteNativeLoader again.
      * 
-     * @return
      * @throws Exception 
      */
     public static synchronized void load() throws Exception {
@@ -203,7 +202,7 @@ public class CrfSuiteLoader {
 	        }
 	        catch (Exception e) {
 	            e.printStackTrace();
-	            throw new Exception(e.getMessage());
+	            throw e;
 	        }
         }
     }
@@ -241,7 +240,7 @@ public class CrfSuiteLoader {
 
             // Create CrfSuiteNativeLoader class from a byte code
             Class< ? > classLoader = Class.forName("java.lang.ClassLoader");
-            Method defineClass = classLoader.getDeclaredMethod("defineClass", new Class[] { String.class, byte[].class,
+            Method defineClass = classLoader.getDeclaredMethod("defineClass", new Class<?>[] { String.class, byte[].class,
                     int.class, int.class, ProtectionDomain.class });
 
             ProtectionDomain pd = System.class.getProtectionDomain();
@@ -267,8 +266,8 @@ public class CrfSuiteLoader {
             return rootClassLoader.loadClass(nativeLoaderClassName);
 
         } catch (Exception e) {
-            e.printStackTrace(System.err);
-            throw new Exception(e.getMessage());
+            e.printStackTrace();
+            throw e;
         }
 
     }
@@ -287,11 +286,11 @@ public class CrfSuiteLoader {
         File nativeLib = findNativeLibrary();
         if (nativeLib != null) {
             // Load extracted or specified crfsuite native library. 
-            Method loadMethod = loaderClass.getDeclaredMethod("loadLibByFile", new Class[] { String.class });
+            Method loadMethod = loaderClass.getDeclaredMethod("loadLibByFile", new Class<?>[] { String.class });
             loadMethod.invoke(null, nativeLib.getAbsolutePath());
         } else {
             // Load preinstalled crfsuite (in the path -Djava.library.path) 
-            Method loadMethod = loaderClass.getDeclaredMethod("loadLibrary", new Class[] { String.class });
+            Method loadMethod = loaderClass.getDeclaredMethod("loadLibrary", new Class<?>[] { String.class });
             loadMethod.invoke(null, "crfsuite");
         }
     }
@@ -381,7 +380,7 @@ public class CrfSuiteLoader {
             return new File(targetFolder, extractedLibFileName);
         }
         catch (IOException e) {
-            e.printStackTrace(System.err);
+            e.printStackTrace();
             return null;
         }
 
@@ -452,7 +451,7 @@ public class CrfSuiteLoader {
 				version = version.trim().replaceAll("[^0-9M\\.]", "");
 			}
 		} catch (IOException e) {
-			System.err.println(e);
+			e.printStackTrace();
 		}	
 		return version;
 	}

@@ -15,19 +15,27 @@ import third_party.org.chokkan.crfsuite.ItemSequence;
 import third_party.org.chokkan.crfsuite.StringList;
 import third_party.org.chokkan.crfsuite.Tagger;
 
+/**
+ * An instance of a tagger using CRFsuite.
+ */
 public class CrfTagger {
 	
 	static {
 		try {
 			CrfSuiteLoader.load();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
-	
-	private static Tagger tagger = new Tagger();
-	
-	public static void loadModel(String modelFile) {
+
+	private final Tagger tagger = new Tagger();
+
+	/**
+	 * Create a tagger using a model file.
+	 * 
+	 * @param modelFile The file containing the model for this tagger.
+	 */
+	public CrfTagger(String modelFile){
 		tagger.open(modelFile);
 	}
 	
@@ -36,30 +44,34 @@ public class CrfTagger {
 		List<ItemSequence> xseqs = new ArrayList<ItemSequence>();
 		ItemSequence xseq = new ItemSequence();
 		
-		BufferedReader br = new BufferedReader(new FileReader(fileName));
-		String line;
-		while ((line = br.readLine()) != null) {
-			if (line.length() > 0) {
-				String[] fields = line.split("\t");
-				Item item = new Item();
-				for (int i = 1; i < fields.length; i++) { // field 0 is a label
-					item.add(new Attribute(fields[i]));
+		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				if (line.length() > 0) {
+					String[] fields = line.split("\t");
+					Item item = new Item();
+					for (int i = 1; i < fields.length; i++) { // field 0 is a label
+						item.add(new Attribute(fields[i]));
+					}
+					xseq.add(item);
+				} else { // end of sequence
+					xseqs.add(xseq);
+					xseq = new ItemSequence();
 				}
-				xseq.add(item);
-			} else { // end of sequence
-				xseqs.add(xseq);
-				xseq = new ItemSequence();
 			}
 		}
-		br.close();
 		return xseqs;
 	}
 	
 	/**
-	 * Tag an item sequence
+	 * Tag an item sequence. This method is synchronized so that you do not try to label multiple sequences at the same
+	 * time.
+	 * 
+	 * @param xseq
+	 *			The input sequence.
+	 * @return For each item in the sequence, a {@link Pair} for each label with the score for the label.
 	 */
-	public static List<Pair<String, Double>> tag(ItemSequence xseq) {
-		
+	public synchronized List<Pair<String, Double>> tag(ItemSequence xseq) {
 		List<Pair<String, Double>> predicted = 
 				new ArrayList<Pair<String, Double>>();
 		
@@ -75,9 +87,17 @@ public class CrfTagger {
 	}
 	
 	/**
-	 * Tag text in file
+	 * Tag text in file. This calls a synchronized method so that you do not try to label multiple sequences at the same
+	 * time.
+	 * 
+	 * @param fileName
+	 *			The name of the file containing sequences to label.
+	 * @return For each sequence in the file, for each item in the sequence, a {@link Pair} for each label with the
+	 *		 score for the label
+	 * @throws IOException
+	 *			 If there is a problem using the file.
 	 */
-	public static List<List<Pair<String, Double>>> tag(String fileName) throws IOException {
+	public List<List<Pair<String, Double>>> tag(String fileName) throws IOException {
 		
 		List<List<Pair<String, Double>>> taggedSentences = 
 				new ArrayList<List<Pair<String, Double>>>();
@@ -87,5 +107,18 @@ public class CrfTagger {
 		}
 		
 		return taggedSentences;
+	}
+
+	/**
+	 * @return The possible labels for this tagger.
+	 */
+	public List<String> getlabels() {
+		StringList labels = tagger.labels();
+		int numLabels = (int) labels.size();
+		List<String> result = new ArrayList<>(numLabels);
+		for (int labelIndex = 0; labelIndex < numLabels; ++labelIndex) {
+			result.add(labels.get(labelIndex));
+		}
+		return result;
 	}
 }
