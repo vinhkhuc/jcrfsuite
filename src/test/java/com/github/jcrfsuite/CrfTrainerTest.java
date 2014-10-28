@@ -55,7 +55,7 @@ public class CrfTrainerTest {
 		assertThat(tagger.getlabels(), contains("TEST", "O"));
 
 		List<List<Pair<String, Double>>> tagging = tagger.tag(trainingDataPathString);
-		// Make sure both got tagged.
+		// Make sure all got tagged.
 		assertThat(tagging, hasSize(3));
 
 		// Using ugly explicit tests to use closeTo.
@@ -69,7 +69,7 @@ public class CrfTrainerTest {
 		List<Pair<String, Double>> secondTest = tagging.get(1);
 		assertThat(secondTest, hasSize(1));
 		assertThat(secondTest.get(0).getFirst(), equalTo("TEST"));
-		// Testing to make sure "test:3" got split properly by trainer and tester.
+		// To help make sure "test:3" got split properly by trainer and tester.
 		double scoreForTripleFeature = 0.855;
 		assertThat(secondTest.get(0).getSecond(), closeTo(scoreForTripleFeature, 0.001));
 
