@@ -9,6 +9,27 @@
 	<packaging>jar</packaging>
 	<url>http://maven.apache.org</url>
 
+	<developers>
+		<developer>
+			<id>vinhkhuc</id>
+			<name>Vinh Khuc</name>
+			<url>http://github.com/vinhkhuc</url>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+		</developer>
+
+		<developer>
+			<id>juharris</id>
+			<name>Justin Harris</name>
+			<url>http://github.com/juharris</url>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+
 	<scm>
 		<connection>scm:git:https://github.com/vinhkhuc/jcrfsuite.git</connection>
 		<developerConnection>scm:git:git@github.com:vinhkhuc/jcrfsuite.git</developerConnection>
