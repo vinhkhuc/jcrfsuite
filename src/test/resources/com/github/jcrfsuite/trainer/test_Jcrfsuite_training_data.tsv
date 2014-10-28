@@ -1,0 +1,6 @@
+TEST	test
+O	nothing
+
+TEST	test:3
+
+TEST	test	test	test

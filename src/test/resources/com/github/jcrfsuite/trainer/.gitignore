@@ -1,0 +1,2 @@
+# Ignore trained models from tests.
+/*.crfsuite
