@@ -34,28 +34,36 @@ public class CrfTrainer {
 		ItemSequence xseq = new ItemSequence();
 		StringList yseq = new StringList();
 		
-		BufferedReader br = new BufferedReader(new FileReader(fileName));
-		String line;
-		while ((line = br.readLine()) != null) {
-			if (line.length() > 0) {
-				String[] fields = line.split("\t");
-				// add label
-				yseq.add(fields[0]);
-				// add item which is a list of attributes
-				Item item = new Item();
-				for (int i = 1; i < fields.length; i++) {
-					item.add(new Attribute(fields[i]));
+		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				if (line.length() > 0) {
+					String[] fields = line.split("\t");
+					// add label
+					yseq.add(fields[0]);
+					// add item which is a list of attributes
+					Item item = new Item();
+					for (int i = 1; i < fields.length; i++) {
+						String field = fields[i];
+						String[] colonSplit = field.split(":", 2);
+						if (colonSplit.length == 2) {
+							// the feature has a scaling value
+							double val = Double.valueOf(colonSplit[1]);
+							item.add(new Attribute(colonSplit[0], val));
+						} else {
+							item.add(new Attribute(field));
+						}
+					}
+					xseq.add(item);
+
+				} else {
+					xseqs.add(xseq);
+					yseqs.add(yseq);
+					xseq = new ItemSequence();
+					yseq = new StringList();
 				}
-				xseq.add(item);
-				
-			} else {
-				xseqs.add(xseq);
-				yseqs.add(yseq);
-				xseq = new ItemSequence();
-				yseq = new StringList();
 			}
 		}
-		br.close();
 		
 		return new Pair<List<ItemSequence>, List<StringList>>(xseqs, yseqs);
 	}
