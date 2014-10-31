@@ -1,19 +1,15 @@
 package com.github.jcrfsuite;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.jcrfsuite.util.CrfSuiteLoader;
-import com.github.jcrfsuite.util.Pair;
-
-import third_party.org.chokkan.crfsuite.Attribute;
-import third_party.org.chokkan.crfsuite.Item;
 import third_party.org.chokkan.crfsuite.ItemSequence;
 import third_party.org.chokkan.crfsuite.StringList;
 import third_party.org.chokkan.crfsuite.Tagger;
+
+import com.github.jcrfsuite.util.CrfSuiteLoader;
+import com.github.jcrfsuite.util.Pair;
 
 /**
  * An instance of a tagger using CRFsuite.
@@ -38,31 +34,7 @@ public class CrfTagger {
 	public CrfTagger(String modelFile){
 		tagger.open(modelFile);
 	}
-	
-	protected static List<ItemSequence> loadTaggingInstances(String fileName) throws IOException 
-	{
-		List<ItemSequence> xseqs = new ArrayList<ItemSequence>();
-		ItemSequence xseq = new ItemSequence();
-		
-		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-			String line;
-			while ((line = br.readLine()) != null) {
-				if (line.length() > 0) {
-					String[] fields = line.split("\t");
-					Item item = new Item();
-					for (int i = 1; i < fields.length; i++) { // field 0 is a label
-						item.add(new Attribute(fields[i]));
-					}
-					xseq.add(item);
-				} else { // end of sequence
-					xseqs.add(xseq);
-					xseq = new ItemSequence();
-				}
-			}
-		}
-		return xseqs;
-	}
-	
+
 	/**
 	 * Tag an item sequence. This method is synchronized so that you do not try to label multiple sequences at the same
 	 * time.
@@ -101,8 +73,9 @@ public class CrfTagger {
 		
 		List<List<Pair<String, Double>>> taggedSentences = 
 				new ArrayList<List<Pair<String, Double>>>();
-		
-		for (ItemSequence xseq: loadTaggingInstances(fileName)) {
+
+		Pair<List<ItemSequence>, List<StringList>> taggingSequences = CrfTrainer.loadTrainingInstances(fileName);
+		for (ItemSequence xseq: taggingSequences.getFirst()) {
 			taggedSentences.add(tag(xseq));
 		}
 		

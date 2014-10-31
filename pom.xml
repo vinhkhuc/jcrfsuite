@@ -4,10 +4,31 @@
 
 	<groupId>com.github.jcrfsuite</groupId>
 	<artifactId>jcrfsuite</artifactId>
-	<version>0.2</version>
+	<version>0.3</version>
 	<name>Crfsuite for Java</name>
 	<packaging>jar</packaging>
 	<url>http://maven.apache.org</url>
+
+	<developers>
+		<developer>
+			<id>vinhkhuc</id>
+			<name>Vinh Khuc</name>
+			<url>http://github.com/vinhkhuc</url>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+		</developer>
+
+		<developer>
+			<id>juharris</id>
+			<name>Justin Harris</name>
+			<url>http://github.com/juharris</url>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
 
 	<scm>
 		<connection>scm:git:https://github.com/vinhkhuc/jcrfsuite.git</connection>
@@ -46,18 +67,52 @@
 					<showDeprecation>true</showDeprecation>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>1.3.1</version>
+				<executions>
+					<execution>
+						<id>enforce</id>
+						<configuration>
+							<rules>
+								<requireUpperBoundDeps />
+								<dependencyConvergence />
+							</rules>
+						</configuration>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>org.codehaus.plexus</groupId>
-			<artifactId>plexus-classworlds</artifactId>
-			<version>2.5.1</version>
-		</dependency>
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-library</artifactId>
+			<version>1.3</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

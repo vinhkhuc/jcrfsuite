@@ -17,6 +17,9 @@ import com.github.jcrfsuite.util.Pair;
 
 public class CrfTrainer {
 	
+	private static final String DEFAULT_ALGORITHM = "lbfgs";
+	private static final String DEFAULT_GRAPHICAL_MODEL_TYPE = "crf1d";
+
 	static {
 		try {
 			CrfSuiteLoader.load();
@@ -25,7 +28,15 @@ public class CrfTrainer {
 		}
 	}
 
-	protected static Pair<List<ItemSequence>, List<StringList>> loadTrainingInstances(
+	/**
+	 * Load data in CRFsuite format.
+	 * 
+	 * @param fileName
+	 *			The filename of the file containing the data.
+	 * @return The sequences paired with the expected values.
+	 * @throws IOException
+	 */
+	public static Pair<List<ItemSequence>, List<StringList>> loadTrainingInstances(
 			String fileName) throws IOException 
 	{
 		List<ItemSequence> xseqs = new ArrayList<ItemSequence>();
@@ -34,28 +45,41 @@ public class CrfTrainer {
 		ItemSequence xseq = new ItemSequence();
 		StringList yseq = new StringList();
 		
-		BufferedReader br = new BufferedReader(new FileReader(fileName));
-		String line;
-		while ((line = br.readLine()) != null) {
-			if (line.length() > 0) {
-				String[] fields = line.split("\t");
-				// add label
-				yseq.add(fields[0]);
-				// add item which is a list of attributes
-				Item item = new Item();
-				for (int i = 1; i < fields.length; i++) {
-					item.add(new Attribute(fields[i]));
+		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				if (line.length() > 0) {
+					String[] fields = line.split("\t");
+					// add label
+					yseq.add(fields[0]);
+					// add item which is a list of attributes
+					Item item = new Item();
+					for (int i = 1; i < fields.length; i++) {
+						String field = fields[i];
+						String[] colonSplit = field.split(":", 2);
+						if (colonSplit.length == 2) {
+							// the feature has a scaling value
+							double val = Double.valueOf(colonSplit[1]);
+							item.add(new Attribute(colonSplit[0], val));
+						} else {
+							item.add(new Attribute(field));
+						}
+					}
+					xseq.add(item);
+
+				} else {
+					xseqs.add(xseq);
+					yseqs.add(yseq);
+					xseq = new ItemSequence();
+					yseq = new StringList();
 				}
-				xseq.add(item);
-				
-			} else {
+			}
+			if (!xseq.isEmpty()) {
+				// add the last one
 				xseqs.add(xseq);
 				yseqs.add(yseq);
-				xseq = new ItemSequence();
-				yseq = new StringList();
 			}
 		}
-		br.close();
 		
 		return new Pair<List<ItemSequence>, List<StringList>>(xseqs, yseqs);
 	}
@@ -64,13 +88,7 @@ public class CrfTrainer {
 	 * Trains the CRF Suite using data from a given file.
 	 */
 	public static void train(String fileName, String modelFile) throws IOException {
-		
-		Pair<List<ItemSequence>, List<StringList>> trainingData
-			= loadTrainingInstances(fileName);
-		
-		List<ItemSequence> xseqs = trainingData.first;
-		List<StringList> yseqs = trainingData.second;
-		train(xseqs, yseqs, modelFile);
+		train(fileName, modelFile, DEFAULT_ALGORITHM, DEFAULT_GRAPHICAL_MODEL_TYPE);
 	}
 
 	/**
@@ -94,7 +112,7 @@ public class CrfTrainer {
 	public static void train(List<ItemSequence> xseqs, List<StringList> yseqs, 
 			String modelFile) 
 	{
-		train(xseqs, yseqs, modelFile, "lbfgs", "crf1d");
+		train(xseqs, yseqs, modelFile, DEFAULT_ALGORITHM, DEFAULT_GRAPHICAL_MODEL_TYPE);
 	}
 
 	/**
