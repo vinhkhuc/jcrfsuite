@@ -7,21 +7,21 @@ Jcrfsuite is a Java interface of [crfsuite](http://www.chokkan.org/software/crfs
 To build, you need to install Maven, then run
 
 <pre>
-mvn package
+mvn clean package
 </pre>
 	
 ### 2) Training
 To train a POS model from Twitter POS data, run
 
 <pre>
-java -cp target/jcrfsuite-0.1.jar com.github.jcrfsuite.example.Train example/tweet-pos/train-oct27.txt twitter-pos.model
+java -cp target/jcrfsuite-*.jar com.github.jcrfsuite.example.Train example/tweet-pos/train-oct27.txt twitter-pos.model
 </pre>
 	
 ### 3) Tagging
 To test the trained POS model against the test set, run
 
 <pre>
-java -cp target/jcrfsuite-0.1.jar com.github.jcrfsuite.example.Tag twitter-pos.model example/tweet-pos/test-daily547.txt 
+java -cp target/jcrfsuite-*.jar com.github.jcrfsuite.example.Tag twitter-pos.model example/tweet-pos/test-daily547.txt
 </pre>
 	
 The output should be as follows:
@@ -40,7 +40,7 @@ $       $       1.00
 N       N       0.99
 U       U       1.00
 
-Accuracy = 92.97%
+Accuracy = 92.99%
 </pre>
 
 Note that the accuracy might be slightly different than in the above output.

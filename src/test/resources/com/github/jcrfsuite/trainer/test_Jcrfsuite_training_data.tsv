@@ -4,3 +4,7 @@ O	nothing
 TEST	test:3
 
 TEST	test	test	test
+
+TEST	test:
+
+O	something:test

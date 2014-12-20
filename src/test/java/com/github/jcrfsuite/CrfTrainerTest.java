@@ -13,6 +13,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import third_party.org.chokkan.crfsuite.ItemSequence;
+import third_party.org.chokkan.crfsuite.StringList;
+
 import com.github.jcrfsuite.util.Pair;
 
 public class CrfTrainerTest {
@@ -43,6 +46,29 @@ public class CrfTrainerTest {
 	}
 
 	@Test
+	public void testLoad() throws IOException {
+		Pair<List<ItemSequence>, List<StringList>> trainingInstances =
+				CrfTrainer.loadTrainingInstances(TRAINING_DATA_PATH.toString());
+		List<ItemSequence> sequences = trainingInstances.getFirst();
+
+		List<StringList> labels = trainingInstances.getSecond();
+		// It's hard to make nice tests since ItemSequence doesn't implement equals
+
+		assertThat(sequences.get(0).get(0).get(0).getAttr(), equalTo("test"));
+		assertThat(sequences.get(0).get(0).get(0).getValue(), equalTo(1d));
+		assertThat(labels.get(0).get(0), equalTo("TEST"));
+		assertThat(labels.get(0).get(1), equalTo("O"));
+
+		assertThat(sequences.get(3).get(0).get(0).getAttr(), equalTo("test:"));
+		assertThat(sequences.get(3).get(0).get(0).getValue(), equalTo(1d));
+		assertThat(labels.get(3).get(0), equalTo("TEST"));
+
+		assertThat(sequences.get(4).get(0).get(0).getAttr(), equalTo("something:test"));
+		assertThat(sequences.get(4).get(0).get(0).getValue(), equalTo(1d));
+		assertThat(labels.get(4).get(0), equalTo("O"));
+	}
+
+	@Test
 	public void testTrainStringString() throws IOException {
 		String trainingDataPathString = TRAINING_DATA_PATH.toString();
 		String modelPathString = MODEL_PATH.toString();
@@ -56,7 +82,7 @@ public class CrfTrainerTest {
 
 		List<List<Pair<String, Double>>> tagging = tagger.tag(trainingDataPathString);
 		// Make sure all got tagged.
-		assertThat(tagging, hasSize(3));
+		assertThat(tagging, hasSize(5));
 
 		// Using ugly explicit tests to use closeTo.
 		List<Pair<String, Double>> firstTest = tagging.get(0);

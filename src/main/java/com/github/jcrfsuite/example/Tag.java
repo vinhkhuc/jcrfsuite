@@ -16,6 +16,13 @@ import com.github.jcrfsuite.util.Pair;
  */
 public class Tag {
 
+	/**
+	 * Tag the sequences in a file.
+	 * 
+	 * @param args
+	 *			Model file, test file.
+	 * @throws IOException
+	 */
 	public static void main(String[] args) throws IOException {
 		if (args.length != 2) {
 			System.out.println("Usage: " + Tag.class.getCanonicalName() + " <model file> <test file>");
