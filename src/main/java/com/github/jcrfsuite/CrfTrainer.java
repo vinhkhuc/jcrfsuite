@@ -58,9 +58,14 @@ public class CrfTrainer {
 						String field = fields[i];
 						String[] colonSplit = field.split(":", 2);
 						if (colonSplit.length == 2) {
-							// the feature has a scaling value
-							double val = Double.valueOf(colonSplit[1]);
-							item.add(new Attribute(colonSplit[0], val));
+							try {
+								// See if the feature has a scaling value.
+								double val = Double.valueOf(colonSplit[1]);
+								item.add(new Attribute(colonSplit[0], val));
+							} catch (NumberFormatException e) {
+								// There was no scaling value.
+								item.add(new Attribute(field));
+							}
 						} else {
 							item.add(new Attribute(field));
 						}

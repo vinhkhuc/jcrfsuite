@@ -12,6 +12,13 @@ import com.github.jcrfsuite.CrfTrainer;
  */
 public class Train {
 
+	/**
+	 * Train using the sequences in a file.
+	 * 
+	 * @param args
+	 *			Training file, model file.
+	 * @throws IOException
+	 */
 	public static void main(String[] args) throws IOException {
 		if (args.length != 2) {
 			System.out.println("Usage: " + Train.class.getCanonicalName() + " <train file> <model file>");

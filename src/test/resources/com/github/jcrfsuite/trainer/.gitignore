@@ -1,2 +1,3 @@
 # Ignore trained models from tests.
 /*.crfsuite
+twitter-pos.model
