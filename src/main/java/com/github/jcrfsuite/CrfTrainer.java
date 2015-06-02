@@ -135,16 +135,10 @@ public class CrfTrainer {
 			trainer.append(xseqs.get(i), yseqs.get(i), 0); 
 		}
 		
-		// Use L-BFGS with L1/L2 regularization and 1st-order dyad features
-		// although crf1d is the only one training option :)
+		// Algorithm type: lbfgs, l2sgd, averaged-perceptron, passive-aggressive, arow
 		trainer.select(algorithm, graphicalModelType);
-//		trainer.select("l2sgd", "crf1d");
-//		trainer.select("averaged-perceptron", "crf1d");
-//		trainer.select("passive-aggressive", "crf1d");
-//		trainer.select("arow", "crf1d");
-		
-		// Set coefficient for L2 regulization to 0.1 
-//		trainer.set("c2", "0.1");
+
+		// TODO: Allow to specify c1, c2, epsilon, delta, num_memories
 //		trainer.set("c1", "0.25");
 //		trainer.set("c2", "0.1");
 //		trainer.set("epsilon", "0.0000001");
