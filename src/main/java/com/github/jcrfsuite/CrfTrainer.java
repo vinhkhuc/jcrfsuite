@@ -50,9 +50,9 @@ public class CrfTrainer {
 			while ((line = br.readLine()) != null) {
 				if (line.length() > 0) {
 					String[] fields = line.split("\t");
-					// add label
+					// Add label
 					yseq.add(fields[0]);
-					// add item which is a list of attributes
+					// Add item which is a list of attributes
 					Item item = new Item();
 					for (int i = 1; i < fields.length; i++) {
 						String field = fields[i];
@@ -80,7 +80,7 @@ public class CrfTrainer {
 				}
 			}
 			if (!xseq.isEmpty()) {
-				// add the last one
+				// Add the last one
 				xseqs.add(xseq);
 				yseqs.add(yseq);
 			}
@@ -103,8 +103,7 @@ public class CrfTrainer {
 			String algorithm, String graphicalModelType,
 			Pair<String, String>... parameters) throws IOException {
 		
-		Pair<List<ItemSequence>, List<StringList>> trainingData
-			= loadTrainingInstances(fileName);
+		Pair<List<ItemSequence>, List<StringList>> trainingData = loadTrainingInstances(fileName);
 		
 		List<ItemSequence> xseqs = trainingData.first;
 		List<StringList> yseqs = trainingData.second;
@@ -138,14 +137,14 @@ public class CrfTrainer {
 		// Algorithm type: lbfgs, l2sgd, averaged-perceptron, passive-aggressive, arow
 		trainer.select(algorithm, graphicalModelType);
 
-		// TODO: Allow to specify c1, c2, epsilon, delta, num_memories
+		// TODO: Add example about how to specify training options
 //		trainer.set("c1", "0.25");
 //		trainer.set("c2", "0.1");
 //		trainer.set("epsilon", "0.0000001");
 //		trainer.set("delta", "0.0000001");
 //		trainer.set("num_memories", "6");
 
-		// set parameters
+		// Set parameters
 		if (parameters != null) {
 			for (Pair<String, String> attribute : parameters) {
 				trainer.set(attribute.first, attribute.second);

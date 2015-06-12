@@ -6,9 +6,6 @@ import com.github.jcrfsuite.CrfTrainer;
 
 /**
  * This example shows how to use jcrfsuite to train a POS model
- * 
- * @author vinkhu
- *
  */
 public class Train {
 

@@ -2,12 +2,27 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.github.jcrfsuite</groupId>
+	<groupId>com.github.vinhkhuc</groupId>
 	<artifactId>jcrfsuite</artifactId>
-	<version>0.5</version>
+	<version>0.6</version>
 	<name>Crfsuite for Java</name>
+	<description>
+		Jcrfsuite is a Java interface for crfsuite, a fast implementation of Conditional Random Fields, 
+		using SWIG and class injection technique
+	</description>
 	<packaging>jar</packaging>
 	<url>http://maven.apache.org</url>
+
+	<licenses>
+		<license>
+			<name>Apache License 2.0</name>
+			<comments>jcrfsuite is released under the Apache License 2.0</comments>
+		</license>
+		<license>
+			<name>BSD License</name>
+			<comments>crfsuite's license</comments>
+		</license>		
+	</licenses>
 
 	<developers>
 		<developer>
@@ -47,7 +62,7 @@
 	  	</snapshotRepository>
 		<repository>
 			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+			<url>https://oss.c.org/service/local/staging/deploy/maven2/</url>
 		</repository>	  	
 	</distributionManagement>
 
