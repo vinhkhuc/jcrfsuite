@@ -1,23 +1,25 @@
-Jcrfsuite is a Java interface for [crfsuite](http://www.chokkan.org/software/crfsuite/), a fast implementation of Conditional Random Fields, using SWIG and class injection technique (same technique used in [snappy-java](https://github.com/xerial/snappy-java) version 1.1.0).
+Jcrfsuite is a Java interface for [crfsuite](http://www.chokkan.org/software/crfsuite/), a fast implementation of Conditional Random Fields, using SWIG and class injection technique (same technique used in [snappy-java](https://github.com/xerial/snappy-java) version 1.1.0). Jcrfsuite can be dropped into any Java web applications
+and executed without problem with JVM's class loader.
+
+### Maven dependency
+```xml
+<dependency>
+  <groupId>com.github.vinhkhuc</groupId>
+  <artifactId>jcrfsuite</artifactId>
+  <version>0.6</version>
+</dependency>
+```
 
 ### Example on Twitter Part-of-Speech (POS) tagging
-
-### 1) Build
-
-To build, you need to install Maven, then run
-
-<pre>
-mvn clean package
-</pre>
 	
-### 2) Training
+##### 1) Training
 To train a POS model from Twitter POS data, run
 
 <pre>
 java -cp target/jcrfsuite-*.jar com.github.jcrfsuite.example.Train example/tweet-pos/train-oct27.txt twitter-pos.model
 </pre>
 	
-### 3) Tagging
+##### 2) Tagging
 To test the trained POS model against the test set, run
 
 <pre>
