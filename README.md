@@ -1,5 +1,6 @@
-Jcrfsuite is a Java interface for [crfsuite](http://www.chokkan.org/software/crfsuite/), a fast implementation of Conditional Random Fields, using SWIG and class injection technique (same technique used in [snappy-java](https://github.com/xerial/snappy-java) version 1.1.0). Jcrfsuite can be dropped into any Java web applications
-and executed without problem with JVM's class loader.
+This is a Java interface for [crfsuite](http://www.chokkan.org/software/crfsuite/), a fast implementation of Conditional Random Fields, using SWIG and class injection technique (the same technique as [snappy-java](https://github.com/xerial/snappy-java))
+
+Jcrfsuite can be dropped into any Java web applications and run without problem with JVM's class loader.
 
 ### Maven dependency
 ```xml
@@ -9,6 +10,10 @@ and executed without problem with JVM's class loader.
   <version>0.6</version>
 </dependency>
 ```
+
+### License
+
+Jcrfsuite is released under the Apache License 2.0. The original crfsuite is distributed under the BSD License.
 
 ### Example on Twitter Part-of-Speech (POS) tagging
 	
