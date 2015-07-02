@@ -1,4 +1,4 @@
-This is a Java interface for [crfsuite](http://www.chokkan.org/software/crfsuite/), a fast implementation of Conditional Random Fields, using SWIG and class injection technique (the same technique as [snappy-java](https://github.com/xerial/snappy-java))
+This is a Java interface for [crfsuite](http://www.chokkan.org/software/crfsuite/), a fast implementation of Conditional Random Fields, using SWIG and class injection technique (the same technique used in [snappy-java](https://github.com/xerial/snappy-java))
 
 Jcrfsuite can be dropped into any Java web applications and run without problem with JVM's class loader.
 
