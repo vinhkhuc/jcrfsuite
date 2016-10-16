@@ -1,10 +1,14 @@
 package com.github.jcrfsuite;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.github.jcrfsuite.util.CrfSuiteLoader;
+import com.github.jcrfsuite.util.Pair;
 
 import third_party.org.chokkan.crfsuite.Attribute;
 import third_party.org.chokkan.crfsuite.Item;
@@ -12,13 +16,11 @@ import third_party.org.chokkan.crfsuite.ItemSequence;
 import third_party.org.chokkan.crfsuite.StringList;
 import third_party.org.chokkan.crfsuite.Trainer;
 
-import com.github.jcrfsuite.util.CrfSuiteLoader;
-import com.github.jcrfsuite.util.Pair;
-
 public class CrfTrainer {
 	
 	private static final String DEFAULT_ALGORITHM = "lbfgs";
 	private static final String DEFAULT_GRAPHICAL_MODEL_TYPE = "crf1d";
+	public static final String DEFAULT_ENCODING = "UTF-8";
 
 	static {
 		try {
@@ -33,11 +35,13 @@ public class CrfTrainer {
 	 * 
 	 * @param fileName
 	 *			The filename of the file containing the data.
+	 * @param encoding
+	 * 			Encoding of fileName file 
 	 * @return The sequences paired with the expected values.
 	 * @throws IOException
 	 */
 	public static Pair<List<ItemSequence>, List<StringList>> loadTrainingInstances(
-			String fileName) throws IOException 
+			String fileName, String encoding) throws IOException 
 	{
 		List<ItemSequence> xseqs = new ArrayList<ItemSequence>();
 		List<StringList> yseqs = new ArrayList<StringList>();
@@ -45,7 +49,7 @@ public class CrfTrainer {
 		ItemSequence xseq = new ItemSequence();
 		StringList yseq = new StringList();
 		
-		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), encoding))) {
 			String line;
 			while ((line = br.readLine()) != null) {
 				if (line.length() > 0) {
@@ -93,17 +97,24 @@ public class CrfTrainer {
 	 * Trains the CRF Suite using data from a given file.
 	 */
 	public static void train(String fileName, String modelFile) throws IOException {
-		train(fileName, modelFile, DEFAULT_ALGORITHM, DEFAULT_GRAPHICAL_MODEL_TYPE);
+		train(fileName, modelFile, DEFAULT_ALGORITHM, DEFAULT_GRAPHICAL_MODEL_TYPE, DEFAULT_ENCODING);
+	}
+	
+	/**
+	 * Trains the CRF Suite using data from a given file.
+	 */
+	public static void train(String fileName, String modelFile, String encoding) throws IOException {
+		train(fileName, modelFile, DEFAULT_ALGORITHM, DEFAULT_GRAPHICAL_MODEL_TYPE, encoding);
 	}
 
 	/**
 	 * Trains the CRF Suite using data from a given file.
 	 */
 	public static void train(String fileName, String modelFile,
-			String algorithm, String graphicalModelType,
+			String algorithm, String graphicalModelType, String encoding,
 			Pair<String, String>... parameters) throws IOException {
 		
-		Pair<List<ItemSequence>, List<StringList>> trainingData = loadTrainingInstances(fileName);
+		Pair<List<ItemSequence>, List<StringList>> trainingData = loadTrainingInstances(fileName, encoding);
 		
 		List<ItemSequence> xseqs = trainingData.first;
 		List<StringList> yseqs = trainingData.second;
