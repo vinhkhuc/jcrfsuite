@@ -48,7 +48,7 @@ public class CrfTrainerTest {
 	@Test
 	public void testLoad() throws IOException {
 		Pair<List<ItemSequence>, List<StringList>> trainingInstances =
-				CrfTrainer.loadTrainingInstances(TRAINING_DATA_PATH.toString());
+				CrfTrainer.loadTrainingInstances(TRAINING_DATA_PATH.toString(), "UTF-8");
 		List<ItemSequence> sequences = trainingInstances.getFirst();
 
 		List<StringList> labels = trainingInstances.getSecond();

@@ -74,7 +74,33 @@ public class CrfTagger {
 		List<List<Pair<String, Double>>> taggedSentences = 
 				new ArrayList<List<Pair<String, Double>>>();
 
-		Pair<List<ItemSequence>, List<StringList>> taggingSequences = CrfTrainer.loadTrainingInstances(fileName);
+		Pair<List<ItemSequence>, List<StringList>> taggingSequences = CrfTrainer.loadTrainingInstances(fileName, CrfTrainer.DEFAULT_ENCODING);
+		for (ItemSequence xseq: taggingSequences.getFirst()) {
+			taggedSentences.add(tag(xseq));
+		}
+		
+		return taggedSentences;
+	}
+	
+	/**
+	 * Tag text in file. This calls a synchronized method so that you do not try to label multiple sequences at the same
+	 * time.
+	 * 
+	 * @param fileName
+	 *			The name of the file containing sequences to label.
+	 * @param encoding
+	 * 			Encoding of fileName file
+	 * @return For each sequence in the file, for each item in the sequence, a {@link Pair} for each label with the
+	 *		 score for the label
+	 * @throws IOException
+	 *			 If there is a problem using the file.
+	 */
+	public List<List<Pair<String, Double>>> tag(String fileName, String encoding) throws IOException {
+		
+		List<List<Pair<String, Double>>> taggedSentences = 
+				new ArrayList<List<Pair<String, Double>>>();
+
+		Pair<List<ItemSequence>, List<StringList>> taggingSequences = CrfTrainer.loadTrainingInstances(fileName, encoding);
 		for (ItemSequence xseq: taggingSequences.getFirst()) {
 			taggedSentences.add(tag(xseq));
 		}
