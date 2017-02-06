@@ -66,6 +66,19 @@
 		</repository>	  	
 	</distributionManagement>
 
+    <!-- Avoid Java 8's strict doc generator-->
+	<profiles>
+		<profile>
+			<id>disable-java8-doclint</id>
+			<activation>
+				<jdk>[1.8,)</jdk>
+			</activation>
+			<properties>
+				<additionalparam>-Xdoclint:none</additionalparam>
+			</properties>
+		</profile>
+	</profiles>
+
 	<build>
 		<resources>
 			<resource>
