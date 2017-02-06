@@ -4,7 +4,7 @@
 
 	<groupId>com.github.vinhkhuc</groupId>
 	<artifactId>jcrfsuite</artifactId>
-	<version>0.6</version>
+	<version>0.6.1</version>
 	<name>Crfsuite for Java</name>
 	<description>
 		Jcrfsuite is a Java interface for crfsuite, a fast implementation of Conditional Random Fields, 
