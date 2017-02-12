@@ -1,6 +1,15 @@
-This is a Java interface for [crfsuite](http://www.chokkan.org/software/crfsuite/), a fast implementation of Conditional Random Fields, using SWIG and class injection technique (the same technique used in [snappy-java](https://github.com/xerial/snappy-java))
+This is a Java interface for [crfsuite](http://www.chokkan.org/software/crfsuite/),
+a fast implementation of Conditional Random Fields, using SWIG and class
+injection technique (the same technique used in [snappy-java](https://github.com/xerial/snappy-java)).
 
 Jcrfsuite can be dropped into any Java web applications and run without problem with JVM's class loader.
+
+The library is designed for building Java applications for fast text sequential tagging
+such as Part-Of-Speech (POS) tagging, phrase chunking, Named-Entity Recognition (NER), etc.
+
+Jcrfsuite provides API for loading trained model into memory and do sequential tagging in memory.
+Model training is done via command line interface.
+
 
 ### Maven dependency
 ```xml
@@ -11,20 +20,48 @@ Jcrfsuite can be dropped into any Java web applications and run without problem 
 </dependency>
 ```
 
-### License
+### Building
 
-Jcrfsuite is released under the Apache License 2.0. The original crfsuite is distributed under the BSD License.
+```bash
+git clone https://github.com/vinhkhuc/jcrfsuite
+cd jcrfsuite
+mvn clean package
+```
 
-### Example on Twitter Part-of-Speech (POS) tagging
+### How to use
+
+#### Model training
+```java
+import com.github.jcrfsuite.CrfTrainer;
+...
+String trainFile = "data/tweet-pos/train-oct27.txt";
+String modelFile = "twitter-pos.model";
+CrfTrainer.train(trainFile, modelFile);
+```
+
+#### Sequential tagging
+```java
+import com.github.jcrfsuite.CrfTagger;
+import com.github.jcrfsuite.util.Pair;
+...
+String modelFile = "twitter-pos.model";
+String testFile = "data/tweet-pos/test-daily547.txt";
+CrfTagger crfTagger = new CrfTagger(modelFile);
+List<List<Pair<String, Double>>> tagProbLists = crfTagger.tag(testFile);
+```
+
+TODO: Add example about sequential tagging with a single sequence in memory.
+
+### Example on Twitter Part-Of-Speech tagging
 	
-##### 1) Training
+#### Training
 To train a POS model from Twitter POS data, run
 
 <pre>
 java -cp target/jcrfsuite-*.jar com.github.jcrfsuite.example.Train data/tweet-pos/train-oct27.txt twitter-pos.model
 </pre>
 	
-##### 2) Tagging
+#### Tagging
 To test the trained POS model against the test set, run
 
 <pre>
@@ -52,3 +89,6 @@ Accuracy = 92.99%
 
 Note that the accuracy might be slightly different than in the above output.
 
+### License
+
+Jcrfsuite is released under the Apache License 2.0. The original crfsuite is distributed under the BSD License.
