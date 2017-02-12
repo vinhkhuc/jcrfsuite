@@ -42,12 +42,12 @@ public class TrainTagExampleTest {
 	@Test
 	public void testMain() throws IOException {
 		Train.main(new String[] {
-				"example/tweet-pos/train-oct27.txt",
+				"data/tweet-pos/train-oct27.txt",
 				MODEL_PATH.toString()
 		});
 		Tag.main(new String[] {
 				MODEL_PATH.toString(),
-				"example/tweet-pos/test-daily547.txt"
+				"data/tweet-pos/test-daily547.txt"
 		});
 	}
 }

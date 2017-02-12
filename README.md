@@ -21,14 +21,14 @@ Jcrfsuite is released under the Apache License 2.0. The original crfsuite is dis
 To train a POS model from Twitter POS data, run
 
 <pre>
-java -cp target/jcrfsuite-*.jar com.github.jcrfsuite.example.Train example/tweet-pos/train-oct27.txt twitter-pos.model
+java -cp target/jcrfsuite-*.jar com.github.jcrfsuite.example.Train data/tweet-pos/train-oct27.txt twitter-pos.model
 </pre>
 	
 ##### 2) Tagging
 To test the trained POS model against the test set, run
 
 <pre>
-java -cp target/jcrfsuite-*.jar com.github.jcrfsuite.example.Tag twitter-pos.model example/tweet-pos/test-daily547.txt
+java -cp target/jcrfsuite-*.jar com.github.jcrfsuite.example.Tag twitter-pos.model data/tweet-pos/test-daily547.txt
 </pre>
 	
 The output should be as follows:
