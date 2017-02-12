@@ -1,15 +1,13 @@
 This is a Java interface for [crfsuite](http://www.chokkan.org/software/crfsuite/),
 a fast implementation of Conditional Random Fields, using SWIG and class
 injection technique (the same technique used in [snappy-java](https://github.com/xerial/snappy-java)).
-
-Jcrfsuite can be dropped into any Java web applications and run without problem with JVM's class loader.
+Jcrfsuite provides API for loading trained model into memory and do sequential tagging in memory.
+Model training is done via command line interface.
 
 The library is designed for building Java applications for fast text sequential tagging
 such as Part-Of-Speech (POS) tagging, phrase chunking, Named-Entity Recognition (NER), etc.
 
-Jcrfsuite provides API for loading trained model into memory and do sequential tagging in memory.
-Model training is done via command line interface.
-
+Jcrfsuite can be dropped into any Java web applications and run without problem with JVM's class loader.
 
 ### Maven dependency
 ```xml
