@@ -48,8 +48,6 @@ CrfTagger crfTagger = new CrfTagger(modelFile);
 List<List<Pair<String, Double>>> tagProbLists = crfTagger.tag(testFile);
 ```
 
-TODO: Add example about sequential tagging with a single sequence in memory.
-
 ### Example on Twitter Part-Of-Speech tagging
 	
 #### Training
